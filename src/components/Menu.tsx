@@ -16,7 +16,7 @@ const Menu = () => {
       {
         name: 'Dragon Dumplings',
         description: 'Handmade pork and shrimp dumplings with ginger soy sauce',
-        price: '$12',
+        price: '120',
         spicy: false,
         vegetarian: false,
         image: 'https://images.pexels.com/photos/8601135/pexels-photo-8601135.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
@@ -24,7 +24,7 @@ const Menu = () => {
       {
         name: 'Crispy Spring Rolls',
         description: 'Fresh vegetables wrapped in golden pastry, served with sweet chili sauce',
-        price: '$10',
+        price: '100',
         spicy: false,
         vegetarian: true,
         image: 'https://images.pexels.com/photos/6419752/pexels-photo-6419752.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
@@ -42,7 +42,7 @@ const Menu = () => {
       {
         name: 'Peking Duck',
         description: 'Traditional roasted duck with pancakes, scallions, and hoisin sauce',
-        price: '$28',
+        price: '280',
         spicy: false,
         vegetarian: false,
         image: 'https://images.pexels.com/photos/15832879/pexels-photo-15832879/free-photo-of-roasted-duck-with-vegetables.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
@@ -50,7 +50,7 @@ const Menu = () => {
       {
         name: 'Thai Green Curry',
         description: 'Aromatic curry with coconut milk, Thai basil, and jasmine rice',
-        price: '$22',
+        price: '220',
         spicy: true,
         vegetarian: true,
         image: 'https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
@@ -58,7 +58,7 @@ const Menu = () => {
       {
         name: 'Korean BBQ Bulgogi',
         description: 'Marinated beef with Korean spices, served with kimchi and rice',
-        price: '$26',
+        price: '260',
         spicy: true,
         vegetarian: false,
         image: 'https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
@@ -68,7 +68,7 @@ const Menu = () => {
       {
         name: 'Dragon Ramen',
         description: 'Rich tonkotsu broth with chashu pork, soft egg, and nori',
-        price: '$18',
+        price: '180',
         spicy: false,
         vegetarian: false,
         image: 'https://images.pexels.com/photos/1907228/pexels-photo-1907228.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
@@ -76,7 +76,7 @@ const Menu = () => {
       {
         name: 'Pad Thai',
         description: 'Stir-fried rice noodles with tamarind, fish sauce, and peanuts',
-        price: '$16',
+        price: '160',
         spicy: true,
         vegetarian: false,
         image: 'https://images.pexels.com/photos/4220990/pexels-photo-4220990.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
@@ -84,7 +84,7 @@ const Menu = () => {
       {
         name: 'Yangzhou Fried Rice',
         description: 'Classic fried rice with shrimp, eggs, and mixed vegetables',
-        price: '$15',
+        price: '150',
         spicy: false,
         vegetarian: false,
         image: 'https://images.pexels.com/photos/725998/pexels-photo-725998.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
@@ -94,7 +94,7 @@ const Menu = () => {
       {
         name: 'Mango Sticky Rice',
         description: 'Sweet coconut sticky rice topped with fresh mango slices',
-        price: '$9',
+        price: '90',
         spicy: false,
         vegetarian: true,
         image: 'https://images.pexels.com/photos/6210959/pexels-photo-6210959.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
@@ -102,7 +102,7 @@ const Menu = () => {
       {
         name: 'Matcha Ice Cream',
         description: 'Premium Japanese green tea ice cream with red bean',
-        price: '$8',
+        price: '80',
         spicy: false,
         vegetarian: true,
         image: 'https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
