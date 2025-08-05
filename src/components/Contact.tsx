@@ -23,9 +23,9 @@ const Contact = () => {
                 <div>
                   <h3 className="font-display text-xl font-semibold text-white mb-2">Location</h3>
                   <p className="text-gray-300">
-                    123 Asian Street<br />
-                    Food District, FC 12345<br />
-                    Near Central Park
+                    potheri, ktr <br />
+                    Food District,603203<br />
+                    Near SRM
                   </p>
                 </div>
               </div>
