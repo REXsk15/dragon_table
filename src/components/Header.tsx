@@ -32,11 +32,11 @@ const Header = () => {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-1">
                 <Phone size={14} />
-                <span>(555) 123-4567</span>
+                <span>91919191</span>
               </div>
               <div className="flex items-center space-x-1">
                 <MapPin size={14} />
-                <span>123 Asian Street, Food District</span>
+                <span>potheri,food district, SRM</span>
               </div>
             </div>
             <div className="hidden md:block">
