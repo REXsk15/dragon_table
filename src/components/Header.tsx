@@ -13,12 +13,19 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setIsMenuOpen(false);
+    }
+  };
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Menu', href: '#menu' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: 'home' },
+    { name: 'About', href: 'about' },
+    { name: 'Menu', href: 'menu' },
+    { name: 'Gallery', href: 'gallery' },
+    { name: 'Contact', href: 'contact' },
   ];
 
   return (
@@ -63,17 +70,20 @@ const Header = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.name}
-                href={item.href}
+                onClick={() => scrollToSection(item.href)}
                 className={`font-body font-medium hover:text-dragon-orange transition-colors ${
                   isScrolled ? 'text-dragon-dark' : 'text-white'
                 }`}
               >
                 {item.name}
-              </a>
+              </button>
             ))}
-            <button className="bg-gradient-to-r from-dragon-orange to-dragon-red text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transform hover:scale-105 transition-all">
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="bg-gradient-to-r from-dragon-orange to-dragon-red text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transform hover:scale-105 transition-all"
+            >
               Reserve Now
             </button>
           </div>
@@ -91,17 +101,19 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden mt-4 py-4 bg-white rounded-lg shadow-lg">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.name}
-                href={item.href}
-                className="block px-4 py-3 text-dragon-dark hover:bg-gray-50 hover:text-dragon-orange transition-colors"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => scrollToSection(item.href)}
+                className="block w-full text-left px-4 py-3 text-dragon-dark hover:bg-gray-50 hover:text-dragon-orange transition-colors"
               >
                 {item.name}
-              </a>
+              </button>
             ))}
             <div className="px-4 pt-2">
-              <button className="w-full bg-gradient-to-r from-dragon-orange to-dragon-red text-white px-6 py-3 rounded-full font-medium">
+              <button 
+                onClick={() => scrollToSection('contact')}
+                className="w-full bg-gradient-to-r from-dragon-orange to-dragon-red text-white px-6 py-3 rounded-full font-medium"
+              >
                 Reserve Now
               </button>
             </div>

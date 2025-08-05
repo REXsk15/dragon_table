@@ -2,11 +2,18 @@ import React from 'react';
 import { ChefHat, Clock, Star } from 'lucide-react';
 
 const Hero = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
         style={{
           backgroundImage: 'url(https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop)'
         }}
@@ -31,10 +38,16 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <button className="bg-gradient-to-r from-dragon-red to-dragon-orange text-white px-8 py-4 rounded-full font-medium text-lg hover:shadow-xl transform hover:scale-105 transition-all">
+            <button 
+              onClick={() => scrollToSection('menu')}
+              className="bg-gradient-to-r from-dragon-red to-dragon-orange text-white px-8 py-4 rounded-full font-medium text-lg hover:shadow-xl transform hover:scale-105 transition-all animate-pulse hover:animate-none"
+            >
               Explore Menu
             </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-white hover:text-dragon-dark transition-all">
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="border-2 border-white text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-white hover:text-dragon-dark transition-all"
+            >
               Make Reservation
             </button>
           </div>

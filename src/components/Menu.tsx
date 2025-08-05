@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Flame, Leaf } from 'lucide-react';
+import { Flame, Leaf, Search, Filter } from 'lucide-react';
 
 const Menu = () => {
   const [activeCategory, setActiveCategory] = useState('appetizers');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [priceFilter, setPriceFilter] = useState('all');
 
   const categories = [
     { id: 'appetizers', name: 'Appetizers', icon: '🥟' },
@@ -32,7 +34,7 @@ const Menu = () => {
       {
         name: 'Szechuan Chicken Wings',
         description: 'Spicy wings with Szechuan peppercorns and chili oil',
-        price: '$14',
+        price: '140',
         spicy: true,
         vegetarian: false,
         image: 'https://images.pexels.com/photos/17768885/pexels-photo-17768885/free-photo-of-chicken-wings-on-a-plate.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'
@@ -110,6 +112,17 @@ const Menu = () => {
     ],
   };
 
+  const filteredItems = menuItems[activeCategory].filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         item.description.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesPrice = priceFilter === 'all' || 
+                        (priceFilter === 'under150' && parseInt(item.price) < 150) ||
+                        (priceFilter === 'over150' && parseInt(item.price) >= 150);
+    
+    return matchesSearch && matchesPrice;
+  });
+
   return (
     <section id="menu" className="py-20 bg-dragon-dark">
       <div className="container mx-auto px-4">
@@ -132,7 +145,7 @@ const Menu = () => {
             <button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all transform hover:scale-105 ${
+              className={`px-6 py-3 rounded-full font-medium transition-all transform hover:scale-105 hover:rotate-1 ${
                 activeCategory === category.id
                   ? 'bg-gradient-to-r from-dragon-orange to-dragon-red text-white shadow-lg'
                   : 'bg-white/10 text-white hover:bg-white/20'
@@ -144,27 +157,55 @@ const Menu = () => {
           ))}
         </div>
 
+        {/* Search and Filter */}
+        <div className="max-w-2xl mx-auto mb-12">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                type="text"
+                placeholder="Search dishes..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-dragon-orange focus:border-transparent"
+              />
+            </div>
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <select
+                value={priceFilter}
+                onChange={(e) => setPriceFilter(e.target.value)}
+                className="pl-10 pr-8 py-3 bg-white/10 border border-white/20 rounded-full text-white focus:outline-none focus:ring-2 focus:ring-dragon-orange focus:border-transparent appearance-none cursor-pointer"
+              >
+                <option value="all" className="text-black">All Prices</option>
+                <option value="under150" className="text-black">Under ₹150</option>
+                <option value="over150" className="text-black">₹150+</option>
+              </select>
+            </div>
+          </div>
+        </div>
         {/* Menu Items */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {menuItems[activeCategory].map((item, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
+          {filteredItems.length > 0 ? filteredItems.map((item, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+              className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-rotate-1 transition-all duration-300 animate-fade-in"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="relative">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-cover hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute top-4 right-4 flex space-x-2">
                   {item.spicy && (
-                    <div className="bg-dragon-red text-white p-1 rounded-full">
+                    <div className="bg-dragon-red text-white p-1 rounded-full animate-pulse">
                       <Flame size={16} />
                     </div>
                   )}
                   {item.vegetarian && (
-                    <div className="bg-dragon-green text-white p-1 rounded-full">
+                    <div className="bg-dragon-green text-white p-1 rounded-full animate-bounce">
                       <Leaf size={16} />
                     </div>
                   )}
@@ -177,18 +218,30 @@ const Menu = () => {
                     {item.name}
                   </h3>
                   <span className="text-2xl font-bold text-dragon-orange">
-                    {item.price}
+                    ₹{item.price}
                   </span>
                 </div>
                 <p className="text-gray-600 mb-4 leading-relaxed">
                   {item.description}
                 </p>
-                <button className="w-full bg-gradient-to-r from-dragon-orange to-dragon-red text-white py-2 px-4 rounded-full font-medium hover:shadow-lg transition-all">
+                <button className="w-full bg-gradient-to-r from-dragon-orange to-dragon-red text-white py-2 px-4 rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all group">
+                  <span className="group-hover:scale-110 transition-transform inline-block">
                   Add to Order
+                  </span>
                 </button>
               </div>
             </div>
-          ))}
+          )) : (
+            <div className="col-span-full text-center py-12">
+              <div className="text-white/60 text-xl">No dishes found matching your criteria</div>
+              <button 
+                onClick={() => {setSearchTerm(''); setPriceFilter('all');}}
+                className="mt-4 text-dragon-orange hover:text-dragon-gold transition-colors"
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

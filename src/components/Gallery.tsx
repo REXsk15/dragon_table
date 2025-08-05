@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Instagram, Camera } from 'lucide-react';
 
 const Gallery = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   const images = [
     {
       url: 'https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop',
@@ -62,18 +64,19 @@ const Gallery = () => {
           {images.map((image, index) => (
             <div
               key={index}
-              className="relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+              onClick={() => setSelectedImage(image.url)}
             >
               <img
                 src={image.url}
                 alt={image.alt}
-                className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                className="w-full h-64 object-cover group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-4 left-4 right-4">
                   <div className="flex items-center justify-between">
                     <Camera className="text-white" size={20} />
-                    <button className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <button className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-white/30 transition-colors">
                       View
                     </button>
                   </div>
@@ -83,9 +86,30 @@ const Gallery = () => {
           ))}
         </div>
 
+        {/* Image Modal */}
+        {selectedImage && (
+          <div 
+            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 animate-fade-in"
+            onClick={() => setSelectedImage(null)}
+          >
+            <div className="relative max-w-4xl max-h-full">
+              <img
+                src={selectedImage}
+                alt="Gallery image"
+                className="max-w-full max-h-full object-contain rounded-lg animate-slide-up"
+              />
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
         {/* CTA */}
         <div className="text-center mt-12">
-          <button className="bg-gradient-to-r from-dragon-orange to-dragon-red text-white px-8 py-4 rounded-full font-medium text-lg hover:shadow-xl transform hover:scale-105 transition-all">
+          <button className="bg-gradient-to-r from-dragon-orange to-dragon-red text-white px-8 py-4 rounded-full font-medium text-lg hover:shadow-xl transform hover:scale-105 hover:rotate-2 transition-all">
             Visit Our Instagram
           </button>
         </div>

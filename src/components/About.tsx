@@ -1,5 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Heart, Globe, Users } from 'lucide-react';
+
+const AnimatedCounter = ({ end, duration = 2000 }: { end: number; duration?: number }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const counterRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTime: number;
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      setCount(Math.floor(progress * end));
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [isVisible, end, duration]);
+
+  return <div ref={counterRef} className="text-2xl font-bold text-dragon-dark">{count.toLocaleString()}+</div>;
+};
 
 const About = () => {
   return (
@@ -49,17 +91,17 @@ const About = () => {
             <div className="grid grid-cols-3 gap-6">
               <div className="text-center p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
                 <Heart className="text-dragon-red mx-auto mb-2" size={32} />
-                <div className="text-2xl font-bold text-dragon-dark">10k+</div>
+                <AnimatedCounter end={10000} />
                 <div className="text-sm text-gray-600">Happy Customers</div>
               </div>
               <div className="text-center p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
                 <Globe className="text-dragon-orange mx-auto mb-2" size={32} />
-                <div className="text-2xl font-bold text-dragon-dark">8</div>
+                <AnimatedCounter end={8} />
                 <div className="text-sm text-gray-600">Asian Countries</div>
               </div>
               <div className="text-center p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
                 <Users className="text-dragon-gold mx-auto mb-2" size={32} />
-                <div className="text-2xl font-bold text-dragon-dark">15</div>
+                <AnimatedCounter end={15} />
                 <div className="text-sm text-gray-600">Expert Chefs</div>
               </div>
             </div>

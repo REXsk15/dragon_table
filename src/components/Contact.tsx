@@ -1,7 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MapPin, Phone, Clock, Mail, Calendar } from 'lucide-react';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    date: '',
+    time: '',
+    partySize: '2',
+    phone: '',
+    requests: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    setIsSubmitting(false);
+    setShowSuccess(true);
+    setFormData({
+      firstName: '',
+      lastName: '',
+      date: '',
+      time: '',
+      partySize: '2',
+      phone: '',
+      requests: ''
+    });
+    
+    setTimeout(() => setShowSuccess(false), 5000);
+  };
+
   return (
     <section id="contact" className="py-20 bg-dragon-dark">
       <div className="container mx-auto px-4">
@@ -152,26 +193,74 @@ const Contact = () => {
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dragon-orange focus:border-transparent"
                     placeholder="Your phone number"
                   />
-                </div>
+          {showSuccess && (
+            <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg animate-slide-up">
+              <strong>Success!</strong> Your reservation request has been submitted. We'll contact you shortly to confirm.
+            </div>
+          )}
               </div>
+          <form onSubmit={handleSubmit} className="space-y-6">
 
-              <div>
+                <select 
+                  name="partySize"
+                  value={formData.partySize}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dragon-orange focus:border-transparent"
+                >
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Special Requests
                 </label>
                 <textarea
                   rows={4}
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dragon-orange focus:border-transparent"
                   placeholder="Any special dietary requirements or requests..."
                 ></textarea>
               </div>
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  required
 
+                  name="date"
+                  value={formData.date}
+                  onChange={handleInputChange}
+                  required
+                  min={new Date().toISOString().split('T')[0]}
               <button
                 type="submit"
                 className="w-full bg-gradient-to-r from-dragon-orange to-dragon-red text-white py-4 px-6 rounded-lg font-medium text-lg hover:shadow-xl transform hover:scale-105 transition-all"
               >
                 Reserve Table
-              </button>
+                  name="lastName"
+                name="requests"
+                value={formData.requests}
+                onChange={handleInputChange}
+                  value={formData.lastName}
+                <select 
+                  name="time"
+                  value={formData.time}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dragon-orange focus:border-transparent"
+              disabled={isSubmitting}
+              className={`w-full py-4 px-6 rounded-lg font-medium text-lg transition-all ${
+                isSubmitting 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-gradient-to-r from-dragon-orange to-dragon-red hover:shadow-xl transform hover:scale-105'
+              } text-white`}
+                  required
+              {isSubmitting ? (
+                <span className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Submitting...
+                </span>
+              ) : (
+                'Reserve Table'
+              )}
             </form>
           </div>
         </div>
